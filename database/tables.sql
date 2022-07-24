@@ -1,3 +1,5 @@
 create table users(user_id serial primary key, full_name varchar, email varchar unique, password varchar);
 create table facilities(facility_id serial primary key, name varchar, location varchar, reg varchar, capacity int, contact varchar, email varchar unique, password varchar);
 create table service_config(config_id serial primary key, service_name varchar, service_description varchar);
+create table services(service_id serial not null primary key, facility_ref int, foreign key (facility_ref) references facilities(facility_id),config_ref int, foreign key (config_ref) references service_config(config_id));
+create table bookings (booking_id serial not null primary key,user_ref int not null,foreign key (user_ref) references users(user_id),facility_ref int not null,foreign key (facility_ref) references facilities(facility_id),service_id int not null,foreign key (service_id) references service_config(config_id),booking_date date not null,booking_time time not null,booking_status varchar);

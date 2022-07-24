@@ -55,9 +55,8 @@ router.post('/registerFacility', async (req, res) => {
             await db.none('insert into facilities(name, location, reg, capacity, contact, email, password) values ($1, $2, $3, $4, $5, $6, $7)', [name, location, reg, capacity, contact, email, hashedPass])
             let facilityId = await db.one('select facility_id from facilities where email = $1', [email])
             services.forEach(service => db.none('insert into services(facility_ref, config_ref) values ($1, $2)', [facilityId.facility_id, service]))
+            res.json('Successful registration') 
         })  
-        res.json('Successful registration') 
-
     } catch (error) {
         console.log(error)
         res.json(error)
