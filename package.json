@@ -4,5 +4,25 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "pg-promise": "^10.11.1"
-  }
+  },
+  
+  "name": "fema-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbalindaba01/fema-back.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mbalindaba01/fema-back/issues"
+  },
+  "homepage": "https://github.com/mbalindaba01/fema-back#readme",
+  "description": ""
 }
