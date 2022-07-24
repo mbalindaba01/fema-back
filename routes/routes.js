@@ -1,7 +1,12 @@
 const router = require('express').Router()
+const express = require('express')()
 const pgp = require('pg-promise')()
 const bcrypt = require("bcrypt")
 const dotenv = require("dotenv")
+const cors = require('cors')
+express.use(cors({
+    origin: 'http://127.0.0.1:5173'
+}))
 dotenv.config()
 
 //connection to database
