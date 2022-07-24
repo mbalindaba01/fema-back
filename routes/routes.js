@@ -7,6 +7,9 @@ dotenv.config()
 //connection to database
 const config = {
 	connectionString: process.env.DATABASE_URL || 'postgresql://postgres:Minenhle!28@localhost:5432/fema',
+    ssl: {
+        rejectUnauthorized: false
+    }
 }
 const db = pgp(config)
 
