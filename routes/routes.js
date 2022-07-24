@@ -20,8 +20,8 @@ router.post('/register', async(req, res) => {
         const { name, email, password } = req.body
         bcrypt.hash(password, 10).then(async(hashedPass) => {
             await db.none('insert into users(full_name, email, password) values ($1, $2, $3)', [name, email, hashedPass])
+            res.json('Successful register')
         })        
-        res.json('Successful register')
     } catch (error) {
         console.log(error)
         res.json(error)
