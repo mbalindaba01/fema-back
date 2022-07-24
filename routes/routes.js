@@ -17,10 +17,7 @@ router.get('/', (req, res) => {
 //register route for individual users
 router.post('/register', async(req, res) => {
     try {
-        // const { name, email, password } = req.body
-        let name = 'Mbali',
-            email = 'mbalindaba01@gmail.com',
-            password = 'Mbali123'
+        const { name, email, password } = req.body
         bcrypt.hash(password, 10).then(async(hashedPass) => {
             await db.none('insert into users(full_name, email, password) values ($1, $2, $3)', [name, email, hashedPass])
         })        
@@ -34,17 +31,14 @@ router.post('/register', async(req, res) => {
 //login route for individual users
 router.post('/login', async (req, res) => {
     try {
-        // const { email, password } = req.body
-    const email = 'mbalindaba01@gmail.com'
-    const password = 'Mbali123'
-
-    let userExists = await db.any('select * from users where email = $1', [email])
-    if(userExists){
-        let validPassword = await bcrypt.compare(password, userExists[0].password)
-        if(validPassword){
-            res.json('successful login')
+        const { email, password } = req.body
+        let userExists = await db.any('select * from users where email = $1', [email])
+        if(userExists){
+            let validPassword = await bcrypt.compare(password, userExists[0].password)
+            if(validPassword){
+                res.json('successful login')
+            }
         }
-    }
     } catch (error) {
         console.log(error)
         res.json(error)
@@ -55,15 +49,8 @@ router.post('/login', async (req, res) => {
 //route to register facility
 router.post('/registerFacility', async (req, res) => {
     try {
-        // const { name, location, reg, capacity, contact, email, password } = req.body
-        let name = 'Clicks Pharmacy',
-        location = 'Madadeni Section 5',
-        reg = 'CP767777',
-        capacity = 20,
-        contact = '032 553 5353',
-        email = 'mad1@clicks.com',
-        password = 'Clicks123',
-        services = [1,2,3]
+        const { name, location, reg, capacity, contact, email, password, services} = req.body
+        
         bcrypt.hash(password, 10).then(async(hashedPass) => {
             await db.none('insert into facilities(name, location, reg, capacity, contact, email, password) values ($1, $2, $3, $4, $5, $6, $7)', [name, location, reg, capacity, contact, email, hashedPass])
             let facilityId = await db.one('select facility_id from facilities where email = $1', [email])
@@ -81,18 +68,16 @@ router.post('/registerFacility', async (req, res) => {
 router.post('/loginFacility', async (req, res) => {
     try {
         // const { email, password } = req.body
-    const email = 'mad1@clicks.com'
-    const password = 'Clicks123'
 
-    let facExists = await db.any('select * from facilities where email = $1', [email])
-    if(facExists){
-        let validPassword = await bcrypt.compare(password, facExists[0].password)
-        if(validPassword){
-            res.json('successful login')
-        }else{
-            res.json('Invalid password or email')
+        let facExists = await db.any('select * from facilities where email = $1', [email])
+        if(facExists){
+            let validPassword = await bcrypt.compare(password, facExists[0].password)
+            if(validPassword){
+                res.json('successful login')
+            }else{
+                res.json('Invalid password or email')
+            }
         }
-    }
     } catch (error) {
         console.log(error)
         res.json(error)
@@ -115,12 +100,7 @@ router.get('/services', async (req, res) => {
 //route to make booking
 router.post('/makebooking', async (req, res) => {
     try {
-        // const { email, facilityName, date, time, serviceId } = req.body;
-        let useremail = 'mbalindaba01@gmail.com'
-        let facilityName = 'Clicks Pharmacy'
-        let date = '10-12-2022'
-        let time = '10:00'
-        let serviceId = 1
+        const { email, facilityName, date, time, serviceId } = req.body;
         let userRef = await db.oneOrNone('select user_id from users where email = $1', [useremail])
         console.log(userRef);
         if (userRef) {
@@ -142,7 +122,6 @@ router.post('/makebooking', async (req, res) => {
 })
 
 //get all the bookings made to a facility
-//get all the bookings made by users to a facility
 router.get('/facilitybookings', async (req, res) => {
     try {
         let facilityEmail = req.body.email
