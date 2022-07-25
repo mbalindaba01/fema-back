@@ -3,11 +3,18 @@ const pgp = require('pg-promise')()
 const bcrypt = require("bcrypt")
 const dotenv = require("dotenv")
 const cors = require('cors')
+const proxy = require('http-proxy-middleware');
 
 const app = express()
 
 app.use(express.json())
 app.use(cors())
+
+app.use(proxy('/', {
+    target: 'https://fema-backend.herokuapp.com/',
+    logLevel: 'debug',
+    changeOrigin: true
+}));
 
 dotenv.config()
 
