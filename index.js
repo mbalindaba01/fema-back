@@ -4,12 +4,13 @@ const bcrypt = require("bcrypt")
 const dotenv = require("dotenv")
 const cors = require('cors')
 
-
-
 const app = express()
 
 app.use(express.json())
-app.options('*', cors())
+app.use(cors({
+    origin: ['*'],
+    credentials: true
+}));
 
 dotenv.config()
 
