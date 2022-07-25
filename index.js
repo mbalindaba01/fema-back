@@ -47,6 +47,8 @@ app.post('/login', async (req, res) => {
             let validPassword = await bcrypt.compare(password, userExists[0].password)
             if(validPassword){
                 res.json('successful login')
+            }else{
+                res.json('incorrect email or password')
             }
         }
     } catch (error) {
