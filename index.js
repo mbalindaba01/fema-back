@@ -9,11 +9,12 @@ const cors = require('cors')
 const app = express()
 
 app.use(express.json())
-app.use((res, req, next) => {
-    res.header("Access-Control-Allow-Origin", "*"),
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept*")
-    next()
-})
+app.options("/", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.sendStatus(204);
+  });
 
 dotenv.config()
 
