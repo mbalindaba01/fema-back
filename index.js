@@ -14,9 +14,9 @@ dotenv.config()
 //connection to database
 const config = {
 	connectionString: process.env.DATABASE_URL || 'postgresql://postgres:Minenhle!28@localhost:5432/fema',
-    ssl: {
-        rejectUnauthorized: false
-    }
+    // ssl: {
+    //     rejectUnauthorized: false
+    // }
 }
 const db = pgp(config)
 
@@ -41,7 +41,9 @@ app.post('/register', async(req, res) => {
 //login route for individual users
 app.post('/login', async (req, res) => {
     try {
-        const { email, password } = req.body
+        // const { email, password } = req.body
+        let email = 'mbalindaba01@gmail.com'
+        let password = 'Minenhle!28'
         let userExists = await db.any('select * from users where email = $1', [email])
         if(userExists){
             let validPassword = await bcrypt.compare(password, userExists[0].password)
