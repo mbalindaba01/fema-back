@@ -38,17 +38,11 @@ app.post("/fema/login", async (req, res) => {
 		if (!user) return res.status(400).send("User does not exist");
 
 		const dbPassword = user.password;
-	const validPass = await bcrypt.compare(password, dbPassword);
-    
-	if (!validPass) {
-        return res.status(400).send("Invalid email or password");
-    }
-	//create and assign token
-	const tokenUser = { email: email };
-	const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET);
-
-    // console.log({token});
-    res.header("access_token", token).send(token);
+        const validPass = await bcrypt.compare(password, dbPassword);
+        
+        if (!validPass) {
+            return res.status(400).send("Invalid email or password");
+        }
     }
 	catch(error){
 		res.json(error)
@@ -116,11 +110,6 @@ app.get('/fema/services', async (req, res) => {
 
         const validPass = await bcrypt.compare(facilityPass, dbPassword);
         if (!validPass) return res.status(400).send("Invalid email or password");
-        //create and assign token
-        const tokenUser = { email: facilityEmail };
-        const token = jwt.sign(tokenUser, process.env.FACTOKEN_SECRET);
-
-        res.header("access_token", token).send(token);
     }); 
 
     app.get('/fema/services/:facility', async (req, res) => {
