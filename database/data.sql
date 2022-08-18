@@ -1,1 +1,10 @@
- insert into service_config(service_name, service_description) values ('pre-natal care', 'pre natal care is care specialised to women who are pregnant. It is aimed at making sure that the foetus is taken care of during the gestation period and the carrier is also healthy'), ('contraception', 'contraception refers to the use of chemical or physical means to prevent pregnancy. It includes ingesting pills, putting mechanical tools in the body that emit chemicals to prevent pregnancy or using condoms. Teh aim is to prevent reproduction'), ('pregnancy termination', 'pregnancy termination is the process of removing a foetus from the body of a pregnant woman. In South Africa, it is legal up until 12 weeks for any reason, while after that it can only be administered if the life of the person carrying the foetus is put in danger by the pregnancy');
+insert into facilities(facility_name, facility_location, facility_reg, facility_capacity, facility_contacno, facility_email, password)
+values('clicks', 'suninghill', 'Gp 133 33', 2, '0734553355', 'clicksgmail.com', 'Clicks123');
+
+-- insert into facilities(facility_name, facility_location, facility_reg, facility_capacity, facility_contacno, facility_email, services)
+-- values('clicks', 'clicks, joburg', 'GP 334 22', 3, '0737654455', 'clicksgmail.com', '{"Contraceptives", "termination", "family planning", "pregnancy", "menstruation"}'); 
+
+
+insert into service_config(name, description) values('contraceptives', 'Contraception is a way to prevent pregnancy. There are many different types of contraception and some are more effective than others.');
+insert into service_config(name, description) values('pregnancy termination', 'Pregnancy termination is the process of removing a foetus from the body of the pregnant person.');
+insert into service_config(name, description) values('ante-natal care', 'Antenatal care is the sufhauif hjgdsyugsudh hdgfyufsduh hgdfyuguisdh hgdfufgusdh');
