@@ -90,7 +90,7 @@ app.get('/fema/services', async (req, res) => {
             const { facName, facReg, capacity, city, province, contactno, email, password, services } = req.body           
             bcrypt.hash(password, 10)
             .then(async(hashedPass) => {
-                await db.none('insert into facilities(facility_name, city, province, facility_reg, facility_capacity, facility_contacno, facility_email, password) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [facName, city, province, facReg, capacity, contactno, email, hashedPass, 0, 0])
+                await db.none('insert into facilities(facility_name, city, province, facility_reg, facility_capacity, facility_contacno, facility_email, password) values ($1, $2, $3, $4, $5, $6, $7, $8)', [facName, city, province, facReg, capacity, contactno, email, hashedPass])
                 let facilityId = await db.one('select facility_id from facilities where facility_email = $1', [email])
                 services.forEach(service => db.none('insert into services(facility_ref, serv_config_ref) values ($1, $2)', [facilityId.facility_id, service]))
                 res.json('Succesful registration')
