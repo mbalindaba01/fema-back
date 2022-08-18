@@ -1,0 +1,15 @@
+language: node_js
+
+node_js:
+- 16.14.0
+
+env:
+- DATABASE_URL=postgresql://postgres@localhost:5432/fema_app
+
+before_script:
+- npm install
+- psql -c 'create database fema_app;' -U postgres
+- psql -U postgres -d fema_app -a -f ./database/app.sql
+
+services:
+- postgresql
