@@ -1,6 +1,5 @@
 module.exports = function (app, db){
     const bcrypt = require("bcrypt");
-    const jwt = require("jsonwebtoken");
     
 
     app.get('/fema', async (req, res) => {
