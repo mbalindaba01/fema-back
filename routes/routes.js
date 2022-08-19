@@ -118,7 +118,7 @@ app.get('/fema/services', async (req, res) => {
         if (!validPass) return res.status(400).send("Invalid email or password");
         //create and assign token
         const tokenUser = { email: facilityEmail };
-        const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET);
+        const token = jwt.sign(tokenUser, process.env.FACTOKEN_SECRET);
 
         res.header("access_token", token).send(token);
     }); 
