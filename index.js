@@ -1,35 +1,23 @@
-const express = require('express')
-const PgPromise = require("pg-promise")
-require('dotenv').config();
-const cors = require('cors')
+import express from 'express';
+import { createClient } from '@supabase/supabase-js'
+import morgan from 'morgan'
+import bodyParser from "body-parser";
 const API = require('./routes/routes')
 
 const app = express();
 app.use(express.json())
 
-app.use(cors())
+app.use(morgan('combined'));
 
-app.options("*", cors());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
+const supabase = supabaseClient.createClient({
+  apiKey: process.env.ANON_KEY,
+  project: process.env.SUPABASE_URL
+});
 
-
-
-const config = {
-	connectionString: 'postgresql://postgres:Minenhle!28@localhost:5432/fema_app',
-	max: 30
-};
-
-if(process.env.NODE_ENV == 'production'){
-    config.ssl = {
-		rejectUnauthorized : false
-	}
-    config.connectionString = process.env.DATABASE_URL
-}
-
-const pgp = PgPromise({});
-const db = pgp(config);
-
-API(app, db);
+API(app, supabase);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log('Server running at port ' + PORT))

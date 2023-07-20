@@ -10,19 +10,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.26.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^10.0.0",
+    "morgan": "^1.10.0",
     "node-fetch": "^3.2.6",
     "pg-promise": "^10.11.1",
     "supertest": "^6.2.4",
     "web-push": "^3.5.0"
   },
   "devDependencies": {
-    "nodemon": "^1.4.1"
+    "nodemon": "^1.19.4"
   }
 }

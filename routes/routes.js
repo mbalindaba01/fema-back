@@ -1,4 +1,4 @@
-module.exports = function (app, db){
+module.exports = function (app, supabase){
     const bcrypt = require("bcrypt");
     const jwt = require("jsonwebtoken");
     
@@ -15,10 +15,15 @@ app.post('/fema/register', async (req, res) => {
         let password = req.body.password
 
         bcrypt.hash(password, 10).then(async(hashedPass) => {
-            await db.none('insert into users(full_name, email, password) values ($1, $2, $3)', [full_name, email, hashedPass])
+            const { data , error } = await supabase
+            .from('users')
+            .insert({
+                full_name: full_name,
+                email: email,
+                password: hashedPass
+            })
+            res.json('user registered successfully');
         });
-        // console.log(full_name);
-        res.json('user registered successfully');
     }catch (error) {
 		console.log(error);
         	res.json({
