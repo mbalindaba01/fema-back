@@ -10,7 +10,7 @@ module.exports = function (app, supabase){
 //register users route
 app.post('/fema/register', async (req, res) => {
     try {
-        let full_name = req.body.full_name
+        let full_name = req.body.name
         let email = req.body.email
         let password = req.body.password
 
@@ -35,24 +35,28 @@ app.post('/fema/register', async (req, res) => {
 
 //login users route
 app.post("/fema/login", async (req, res) => {
-	const { password, email} = req.body;
+	// const { password, email} = req.body;
+    const password = "Mbali123"
+    const email = "Mbalindaba01@gmail.com"
     try {
-        const user = await db.oneOrNone(`select * from users where email=$1`, [
-			email,
-		]);
-		if (!user) return res.status(400).send("User does not exist");
-
-		const dbPassword = user.password;
-	const validPass = await bcrypt.compare(password, dbPassword);
-    
-	if (!validPass) {
-        return res.status(400).send("Invalid email or password");
-    }
+        const { data, error} = await supabase
+        .from('users')
+        .select()
+        .eq('email', email)
+        const user = data
+        // res.json(user)
+		if (!user) {
+            res.json("User does not exist")
+        }
+		const dbPassword = user[0].password;
+        const validPass = await bcrypt.compare(password, dbPassword);
+        if (!validPass) {
+            res.json("Password incorrect. Please try again");
+        }
 	//create and assign token
 	const tokenUser = { email: email };
 	const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET);
 
-    // console.log({token});
     res.header("access_token", token).send(token);
     }
 	catch(error){
@@ -63,10 +67,12 @@ app.post("/fema/login", async (req, res) => {
 //get all services
 app.get('/fema/services', async (req, res) => {
     try {
-        let services = await db.any('select * from service_config')
+        const { data, error } = await supabase
+        .from('service_config')
+        .select()
+        let services = data
         res.json(services)
     } catch (error) {
-        console.log(error)
         res.json(error)
     }
 })
@@ -140,7 +146,6 @@ app.get('/fema/services', async (req, res) => {
             })
         } 
         catch (error) {
-            console.log(error)
             res.json(error)
         }
     });
@@ -161,7 +166,6 @@ app.get('/fema/services', async (req, res) => {
                     })
                 }
             } catch (error) {
-                console.log(error)
                 res.json(error)
             }
         });
